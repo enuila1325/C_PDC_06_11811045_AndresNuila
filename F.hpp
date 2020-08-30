@@ -20,7 +20,7 @@ public:
             m++;
             d = 1;
         }
-        else if ((this->d == 30) && (this->m == 4 || this->m == 6 || this->m == 9 || this->m == 11))
+        else if ((this->d == 30) && ((this->m == 4 || this->m == 6 || this->m == 9 || this->m == 11)))
         {
             m++;
             d = 1;
@@ -30,7 +30,7 @@ public:
             m++;
             d = 1;
         }
-        else if ((this->d == 31) && (this->m = 12))
+        else if ((this->d == 31) && (this->m == 12))
         {
             a++;
             m = 1;
@@ -66,40 +66,67 @@ public:
             m = 12;
             d = 31;
         }
+        return *this;
     }
-    int F::getAño()
+    int getAnio()
     {
         return a;
     }
-    int F::getMes()
+    int getMes()
     {
         return m;
     }
-    int F::getDia()
+    int getDia()
     {
         return d;
     }
-    int F::getHora()
+    int getHora()
     {
         return h;
     }
-    int F::getMinuto()
+    int getMinuto()
     {
         return min;
     }
-    int F::getSec()
+    int getSec()
     {
         return sec;
     }
-    F::F operator-(F resta)
+    void operator-(F resta)
     {
-        int anioRespuesta = a - resta.getAño();
+        int anioRespuesta = a - resta.getAnio();
         int mesRespuesta = m - resta.getMes();
         int diaRespuesta = d - resta.getDia();
         int horaRespuesta = h - resta.getHora();
         int minRespuesta = min - resta.getMinuto();
         int secRespuesta = sec - resta.getSec();
-        F temporal = F(mesRespuesta, diaRespuesta, anioRespuesta, horaRespuesta, minRespuesta, secRespuesta);
+        if (mesRespuesta < 0)
+        {
+            anioRespuesta--;
+            mesRespuesta += 12;
+        }
+        if (diaRespuesta < 0)
+        {
+            mesRespuesta--;
+            diaRespuesta = 28 - (resta.getDia() - d);
+        }
+        if (horaRespuesta < 0)
+        {
+            diaRespuesta--;
+            horaRespuesta = 24 - (resta.getHora() - h);
+        }
+        if (minRespuesta < 0)
+        {
+            horaRespuesta--;
+            minRespuesta = 60 - (resta.getMinuto() - min);
+        }
+        if (secRespuesta < 0)
+        {
+            minRespuesta--;
+            secRespuesta = 60 - (resta.getSec() - sec);
+        }
+
+        cout << "anios->" << anioRespuesta << " meses->" << mesRespuesta << " dias->" << diaRespuesta << " horas->" << horaRespuesta << " minutos->" << minRespuesta << " segundos->" << secRespuesta << endl;
     }
 
 private:
